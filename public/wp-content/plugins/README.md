@@ -1,0 +1,1 @@
+## Place any custom, non-[Packagist](https://packagist.org/) or [WordPress.org plugins](http://wordpress.org/plugins/) here.

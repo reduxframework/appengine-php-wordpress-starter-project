@@ -1,0 +1,126 @@
+<?php
+    /**
+     * The base configurations of the WordPress.
+     *
+     * This file has the following configurations: MySQL settings, Table Prefix,
+     * Secret Keys, WordPress Language, and ABSPATH. You can find more information
+     * by visiting {@link http://codex.wordpress.org/Editing_wp-config.php Editing
+     * wp-config.php} Codex page. You can get the MySQL settings from your web host.
+     *
+     * This file is used by the wp-config.php creation script during the
+     * installation. You don't have to use the web site, you can just copy this file
+     * to "wp-config.php" and fill in the values.
+     *
+     * @package WordPress
+     */
+
+    // Required for batcache use
+    define('WP_CACHE', true);
+
+    // ** MySQL settings - You can get this info from your web host ** //
+
+    if (isset($_SERVER['SERVER_SOFTWARE']) && strpos($_SERVER['SERVER_SOFTWARE'],'Google App Engine') !== false) {
+        /** Live environment Cloud SQL login and SITE_URL info */
+        define('DB_HOST', ':/cloudsql/your-project-id:wordpress'); # Project_ID:Cloud_SQL_Instance_Name
+        /** Note that from App Engine, the password is not required, so leave it blank here */
+        define('DB_USER', 'root');
+        define('DB_PASSWORD', '');
+        /** The name of the Cloud SQL database for WordPress */
+        define('DB_NAME', 'wordpress_db');
+    } else {
+        /** The name of the local database for WordPress */
+        define('DB_NAME', 'reduxclean');
+        /** Local environment MySQL login info */
+        define('DB_HOST', '127.0.0.1');
+        // If you're using MAMP on MacOS locally, use this line instead for the host.
+        //define('DB_HOST', '127.0.0.1:/Applications/MAMP/tmp/mysql/mysql.sock');
+        define('DB_USER', 'root');
+        define('DB_PASSWORD', 'password'); # For MAMP the DB_PASSWORD is `root`  ;)
+    }
+
+    // Determine HTTP or HTTPS, then set WP_SITEURL and WP_HOME
+    if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) {
+        $protocol_to_use = 'https://';
+    } else {
+        $protocol_to_use = 'http://';
+    }
+    define( 'WP_SITEURL', $protocol_to_use . $_SERVER['HTTP_HOST']);
+    define( 'WP_HOME', $protocol_to_use . $_SERVER['HTTP_HOST']);
+
+    /** Database Charset to use in creating database tables. */
+    define('DB_CHARSET', 'utf8');
+
+    /** The Database Collate type. Don't change this if in doubt. */
+    define('DB_COLLATE', '');
+
+    /**#@+
+     * Authentication Unique Keys and Salts.
+     *
+     * Change these to different unique phrases!
+     * You can generate these using the {@link https://api.wordpress.org/secret-key/1.1/salt/ WordPress.org secret-key service}
+     * You can change these at any point in time to invalidate all existing cookies. This will force all users to have to log in again.
+     *
+     * @since 2.6.0
+     */
+    define('AUTH_KEY',         'put your unique phrase here');
+    define('SECURE_AUTH_KEY',  'put your unique phrase here');
+    define('LOGGED_IN_KEY',    'put your unique phrase here');
+    define('NONCE_KEY',        'put your unique phrase here');
+    define('AUTH_SALT',        'put your unique phrase here');
+    define('SECURE_AUTH_SALT', 'put your unique phrase here');
+    define('LOGGED_IN_SALT',   'put your unique phrase here');
+    define('NONCE_SALT',       'put your unique phrase here');
+
+    /**#@-*/
+
+    /**
+     * WordPress Database Table prefix.
+     *
+     * You can have multiple installations in one database if you give each a unique
+     * prefix. Only numbers, letters, and underscores please!
+     */
+    $table_prefix  = 'wp_';
+
+    /**
+     * WordPress Localized Language, defaults to English.
+     *
+     * Change this to localize WordPress. A corresponding MO file for the chosen
+     * language must be installed to wp-content/languages. For example, install
+     * de_DE.mo to wp-content/languages and set WPLANG to 'de_DE' to enable German
+     * language support.
+     */
+    define('WPLANG', '');
+
+    /**
+     * For developers: WordPress debugging mode.
+     *
+     * Change this to true to enable the display of notices during development.
+     * It is strongly recommended that plugin and theme developers use WP_DEBUG
+     * in their development environments.
+     */
+    # Added a little check, so you can add this to run locally above if needed.  ;)
+    if (!defined('WP_DEBUG')) {
+        define('WP_DEBUG', false);
+    }
+    
+    /**
+     * Disable default wp-cron in favor of a real cron job
+     */
+    define('DISABLE_WP_CRON', true);
+    
+    // configures batcache
+    $batcache = [
+      'seconds'=>0,
+      'max_age'=>30*60, // 30 minutes
+      'debug'=>false
+    ];
+    /* That's all, stop editing! Happy blogging. */
+
+    /** Absolute path to the WordPress directory. */
+    if ( !defined('ABSPATH') )
+        define('ABSPATH', dirname(__FILE__) . '/public.built/');
+
+    /** Sets up WordPress vars and included files. */
+    require_once(ABSPATH . 'wp-settings.php');
+
+

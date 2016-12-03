@@ -1,0 +1,35 @@
+{
+  "require": {
+    "johnpbloch/wordpress": "*",
+    "wpackagist-plugin/batcache": "*",
+    "wpackagist-plugin/memcached": "*",
+    "wpackagist-plugin/google-app-engine":"*"
+  },
+  "require-dev": {
+    "wp-cli/wp-cli": "^0.24.1"
+  },
+  "repositories": [
+    {
+      "type":"composer",
+      "url":"https://wpackagist.org"
+    }
+  ],
+  "extra": {
+    "installer-paths": {
+      "public.built/wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugins"],
+      "public.built/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+      "public.built/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+    }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "cp -R wordpress/* public.built/ && rm -fr wordpress",
+      "cp -R public/* public.built/",
+      "mv public.built/wp-content/plugins/batcache/advanced-cache.php public.built/wp-content/"
+    ],
+    "post-update-cmd": [
+      "cp -R wordpress/* public.built/ && rm -fr wordpress",
+      "cp -R public/* public.built/"
+    ]
+  }
+}
