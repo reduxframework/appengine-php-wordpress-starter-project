@@ -77,7 +77,7 @@ You should be able to log in, and confirm that your app is ready to deploy.
 
 ### Deploy!
 
-If all looks good, you can upload your application using the Launcher or by using this command:
+If all looks good, you can upload your application by using this command:
 
     $ APP_ENGINE_SDK_PATH/appcfg.py update APPLICATION_DIRECTORY
 
@@ -141,3 +141,34 @@ also why we hooked your uploads up to Cloud Storage. So, to install plugins, you
 of your local WordPress instance, install or update any plugins you want there, and
 redeploy. Then go into the admin area for your hosted WordPress instance to activate the plugins.
 
+## Warning
+Anything inside `public.built/` directory will be erased at every composer update. So I'd suggest updating your code inside the `public/` folder and run `composer update` to deploy the changes. 
+
+## Updating WordPress, Plugins, and Themes
+This is SUPER easy. This is it:
+```
+php composer update
+```
+
+## Installing a Private Git Repo
+Inside your composer.json file, modify the following:
+```
+    "repositories": [
+        {
+            "type":"composer",
+            "url":"https://wpackagist.org"
+        },
+        {
+            "type":"package",
+            "package": {
+                "name": "reduxframework/custom-repo",
+                "version":"master",
+                "source": {
+                    "url": "https://user:pass@github.com/redux-framework/custom-repo.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        }
+    ],
+```
