@@ -3,7 +3,8 @@
     "johnpbloch/wordpress": "*",
     "wpackagist-plugin/batcache": "*",
     "wpackagist-plugin/memcached": "*",
-    "wpackagist-plugin/google-app-engine":"*"
+    "wpackagist-plugin/google-app-engine":"*",
+    "wpackagist-plugin/redix-framework":"*"
   },
   "require-dev": {
     "wp-cli/wp-cli": "^0.24.1"
